@@ -16,11 +16,10 @@
             <li class="nav-item"><a th:href="@{/}" class="nav-link" aria-current="page">Главная</a></li>
             <li class="nav-item"><a th:href="@{/login}" class="nav-link active" aria-current="page">Вход</a></li>
             <li class="nav-item"><a th:href="@{/register}" class="nav-link">Регистрация</a></li>
-            <li class="nav-item"><a th:href="@{/users}" class="nav-link">Пользователи</a></li>
         </ul>
     </header>
     <div class="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1" style="width: 500px; margin: auto;">
-        <p class="text-center text-body h1 fw-bold mb-5 mt-4">Войдите, пожалуйста!</p>
+        <p class="text-center text-body h1 fw-bold mb-5 mt-4">Авторизация:</p>
         <form action="#" th:action="@{/login}" th:object="${user}" method="post" style="width: 250px; margin: auto;">
             <div class="d-flex flex-row align-items-center mb-4">
                 <i class="fas text-body fa-user fa-lg me-3 fa-fw"></i>
@@ -39,18 +38,6 @@
                 <div data-mdb-input-init="" class="form-outline flex-fill mb-0" data-mdb-input-initialized="true">
                     <input type="password" name="password" class="form-control" id="password"  required>
                     <label class="form-label" style="margin-left: 0px" for="password">Пароль</label>
-                    <div class="form-notch">
-                        <div class="form-notch-leading" style="width: 9px;"></div>
-                        <div class="form-notch-middle" style="width: 71.2px;"></div>
-                        <div class="form-notch-trailing"></div>
-                    </div>
-                </div>
-            </div>
-            <div class="d-flex flex-row align-items-center mb-4">
-                <i class="fas text-body fa-user fa-lg me-3 fa-fw"></i>
-                <div data-mdb-input-init="" class="form-outline flex-fill mb-0" data-mdb-input-initialized="true">
-                    <input class="form-check-input" type="checkbox" value="remember-me" id="checkbox" required>
-                    <label class="form-check-label" for="checkbox">Запомнить меня</label>
                     <div class="form-notch">
                         <div class="form-notch-leading" style="width: 9px;"></div>
                         <div class="form-notch-middle" style="width: 71.2px;"></div>

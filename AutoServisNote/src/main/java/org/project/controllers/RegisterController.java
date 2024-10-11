@@ -21,7 +21,10 @@ public class RegisterController {
     }
 
     @PostMapping("/register")
-    public String registerUser(Model model, @RequestParam String username, @RequestParam String password, @RequestParam(value = "password2" , required = true) String password2) {
+    public String registerUser(Model model,
+                               @RequestParam String username,
+                               @RequestParam String password,
+                               @RequestParam(value = "password2" , required = true) String password2) {
         User user = new User(username, password);
         if (!user.getPassword().equals(password2)) {
             model.addAttribute("error", "Пароли не совпадают");
@@ -36,4 +39,5 @@ public class RegisterController {
         userRepository.save(user);
         return "redirect:/login";
     }
+
 }
