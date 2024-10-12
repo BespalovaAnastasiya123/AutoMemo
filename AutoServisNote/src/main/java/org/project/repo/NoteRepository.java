@@ -8,6 +8,6 @@ import java.util.List;
 
 
 public interface NoteRepository extends CrudRepository<Note, Long> {
-    List<Note> findByUser(User user);
+    Iterable<Note> findByUser(User user);
 }
 

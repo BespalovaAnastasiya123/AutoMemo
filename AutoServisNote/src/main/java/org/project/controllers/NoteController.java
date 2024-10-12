@@ -5,17 +5,15 @@ import org.project.models.User;
 import org.project.repo.NoteRepository;
 import org.project.repo.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
-import java.util.List;
+
 
 
 @Controller
@@ -24,6 +22,7 @@ public class NoteController {
     private NoteRepository noteRepository;
     @Autowired
     private UserRepository userRepository;
+
     @PostMapping("/addNote")
     public String noteUser(Model model,
                            @RequestParam String date,
@@ -53,22 +52,25 @@ public class NoteController {
             return "addNote";
         }
 
+        // Получение текущего пользователя
+        String currentUsername = SecurityContextHolder.getContext().getAuthentication().getName();
+        User currentUser = userRepository.findByUsername(currentUsername);
+
         // Сохранение заметки
-        Note note = new Note(date, carBrand, carModel, maintenanceWork, maintenanceCost);
+        Note note = new Note(date, carBrand, carModel, maintenanceWork, maintenanceCost, currentUser);
         noteRepository.save(note);
+        model.addAttribute("username", currentUsername);
         model.addAttribute("message1", "Заметка успешно добавлена!");
         return "addNote";
     }
 
-
     @GetMapping("/viewNote")
     public String viewNotes(Model model) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String currentUsername = authentication.getName();
+        String currentUsername = SecurityContextHolder.getContext().getAuthentication().getName();
         User currentUser = userRepository.findByUsername(currentUsername);
-
-        List<Note> notes = noteRepository.findByUser(currentUser);
-        model.addAttribute("note", notes);
+        Iterable<Note> note = noteRepository.findByUser(currentUser);
+        model.addAttribute("note", note);
+        model.addAttribute("username", currentUsername);
         return "viewNote";
     }
 }

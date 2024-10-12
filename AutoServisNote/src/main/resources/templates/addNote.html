@@ -38,8 +38,9 @@
         </ul>
     </header>
     <div class="content">
-        <div class="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1" style="width: 500px; margin: auto;">
-            <p class="lead mb-4">Чтобы оставить заметку о последнем ТО вашего автомобиля заполните форму ниже:</p>
+        <div class="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1" style="width: 600px; margin: auto;">
+            <p class="lead mb-4" style="text-align: center";>Добро пожаловать, <span th:text="${username}"></span>!
+                Чтобы оставить заметку о последнем ТО вашего автомобиля заполните форму ниже:</p>
             <form action="#" th:action="@{/addNote}" th:object="${note}" method="post" style="width: 350px; margin: auto;">
                 <div class="d-flex flex-row align-items-center mb-4">
                     <i class="fas text-body fa-user fa-lg me-3 fa-fw"></i>

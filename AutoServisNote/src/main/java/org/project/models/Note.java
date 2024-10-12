@@ -1,11 +1,14 @@
 package org.project.models;
 
 import javax.persistence.*;
-import java.time.LocalDate;
 
 @Entity
 @Table(name = "note_app")
 public class Note {
+
+    public Note(Long id) {
+        this.id = id;
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,20 +20,28 @@ public class Note {
     private String maintenanceWork;
     private Double maintenanceCost;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
-
-    public Note() {
-    }
-
-    public Note(String date, String carBrand, String carModel, String maintenanceWork, Double maintenanceCost) {
-        this.id = id;
+    public Note(String date, String carBrand, String carModel, String maintenanceWork, Double maintenanceCost, User user) {
+        this.user = user;
         this.date = date;
         this.carBrand = carBrand;
         this.carModel = carModel;
         this.maintenanceWork = maintenanceWork;
         this.maintenanceCost = maintenanceCost;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public Note() {
     }
 
     // Getters and Setters

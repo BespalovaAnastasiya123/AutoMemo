@@ -1,6 +1,7 @@
 package org.project.controllers;
 
 
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,6 +19,9 @@ public class MainController {
 
     @GetMapping("/addNote")
     public String note(Model model) {
+        String currentUsername = SecurityContextHolder.getContext().getAuthentication().getName();
+        // Добавление имени пользователя в модель
+        model.addAttribute("username", currentUsername);
         model.addAttribute("addNote", "Заметки");
         return "addNote";
     }
