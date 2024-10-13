@@ -5,10 +5,12 @@ import org.project.models.User;
 import org.project.repo.NoteRepository;
 import org.project.repo.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import java.time.LocalDate;
@@ -72,5 +74,37 @@ public class NoteController {
         model.addAttribute("note", note);
         model.addAttribute("username", currentUsername);
         return "viewNote";
+    }
+
+    @GetMapping("/editNote/{id}")
+    public String editNoteForm(@PathVariable("id") Long id, Model model) {
+        Note note = noteRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid note Id:" + id));
+        model.addAttribute("note", note);
+        return "editNote";
+    }
+
+    @PostMapping("/editNote/{id}")
+    public String editNote(@PathVariable("id") Long id,
+                           @RequestParam String date,
+                           @RequestParam String carBrand,
+                           @RequestParam String carModel,
+                           @RequestParam String maintenanceWork,
+                           @RequestParam Double maintenanceCost,
+                           Model model) {
+        Note note = noteRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid note Id:" + id));
+        note.setDate(date);
+        note.setCarBrand(carBrand);
+        note.setCarModel(carModel);
+        note.setMaintenanceWork(maintenanceWork);
+        note.setMaintenanceCost(maintenanceCost);
+        noteRepository.save(note);
+        return "redirect:/viewNote";
+    }
+
+    @GetMapping("/deleteNote/{id}")
+    public String deleteNote(@PathVariable("id") Long id, Model model) {
+        Note note = noteRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid note Id:" + id));
+        noteRepository.delete(note);
+        return "redirect:/viewNote";
     }
 }

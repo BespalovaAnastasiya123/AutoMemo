@@ -38,7 +38,6 @@
         </ul>
     </header>
     <div class="content">
-
         <h3>Заметки <span th:text="${username}"></span>:</h3>
         <table class="table table-striped">
             <thead>
@@ -48,6 +47,7 @@
                 <th>Модель авто</th>
                 <th>Вид ТО</th>
                 <th>Стоимость ТО</th>
+                <th>Действия</th>
             </tr>
             </thead>
             <tbody>
@@ -57,6 +57,10 @@
                 <td th:text="${note.carModel}"></td>
                 <td th:text="${note.maintenanceWork}"></td>
                 <td th:text="${note.maintenanceCost}"></td>
+                <td>
+                    <a th:href="@{/editNote/{id}(id=${note.id})}" class="btn btn-primary btn-sm">Редактировать</a>
+                    <a th:href="@{/deleteNote/{id}(id=${note.id})}" class="btn btn-danger btn-sm">Удалить</a>
+                </td>
             </tr>
             </tbody>
         </table>
