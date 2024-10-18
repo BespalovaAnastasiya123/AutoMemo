@@ -56,7 +56,7 @@
                 <td th:text="${note.carBrand}"></td>
                 <td th:text="${note.carModel}"></td>
                 <td th:text="${note.maintenanceWork}"></td>
-                <td th:text="${note.maintenanceCost}"></td>
+                <td th:text="${#numbers.formatDecimal(note.maintenanceCost, 1, 'COMMA', 2, 'POINT')} + ' $'"></td>
                 <td>
                     <a th:href="@{/editNote/{id}(id=${note.id})}" class="btn btn-primary btn-sm">Редактировать</a>
                     <a th:href="@{/deleteNote/{id}(id=${note.id})}" class="btn btn-danger btn-sm">Удалить</a>

@@ -9,5 +9,7 @@ import java.util.List;
 
 public interface NoteRepository extends CrudRepository<Note, Long> {
     Iterable<Note> findByUser(User user);
+
+    long countByUser(User user);
 }
 

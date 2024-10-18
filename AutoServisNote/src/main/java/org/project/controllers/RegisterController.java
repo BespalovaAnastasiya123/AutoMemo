@@ -37,7 +37,12 @@ public class RegisterController {
         }
 
         userRepository.save(user);
-        return "redirect:/login";
+        return "redirect:/registerSuccess";
+    }
+
+    @GetMapping("/registerSuccess")
+    public String showSuccessPage() {
+        return "registerSuccess";
     }
 
 }

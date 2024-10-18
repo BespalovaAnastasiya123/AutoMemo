@@ -24,8 +24,12 @@
             <div class="d-flex flex-row align-items-center mb-4">
                 <i class="fas text-body fa-user fa-lg me-3 fa-fw"></i>
                 <div data-mdb-input-init="" class="form-outline flex-fill mb-0" data-mdb-input-initialized="true">
-                    <input type="login" name="username" class="form-control" id="username"  required>
-                    <label class="form-label" style="margin-left: 0px" for="username">Логин</label>
+                    <input type="text" name="username" class="form-control" id="username" required maxlength="20" pattern="[A-Za-z0-9]+">
+                    <div class="invalid-feedback">
+                        Пожалуйста, введите логин, используя только латинские буквы и цифры.
+                    </div>
+
+                    <label class="form-label" style="margin-left: 0px; text-align: center;" for="username">Логин</label>
                     <div class="form-notch">
                         <div class="form-notch-leading" style="width: 9px;"></div>
                         <div class="form-notch-middle" style="width: 71.2px;"></div>
@@ -36,8 +40,11 @@
             <div class="d-flex flex-row align-items-center mb-4">
                 <i class="fas text-body fa-user fa-lg me-3 fa-fw"></i>
                 <div data-mdb-input-init="" class="form-outline flex-fill mb-0" data-mdb-input-initialized="true">
-                    <input type="password" name="password" class="form-control" id="password"  required>
-                    <label class="form-label" style="margin-left: 0px" for="password">Пароль</label>
+                    <input type="password" name="password" class="form-control" id="password" required minlength="3" maxlength="20" pattern="[A-Za-z0-9]+">
+                    <div class="invalid-feedback">
+                        Пожалуйста, введите пароль минимум 3 символов, используя только латинские буквы и цифры.
+                    </div>
+                    <label class="form-label" style="margin-left: 0px; text-align: center"; for="password">Пароль</label>
                     <div class="form-notch">
                         <div class="form-notch-leading" style="width: 9px;"></div>
                         <div class="form-notch-middle" style="width: 71.2px;"></div>
@@ -46,7 +53,8 @@
                 </div>
             </div>
             <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
-                <button type="submit" data-mdb-button-init="" data-mdb-ripple-init="" class="btn btn-primary btn-lg" data-mdb-button-initialized="true">Войти</button>
+                <button type="submit" data-mdb-button-init="" data-mdb-ripple-init="" class="btn btn-primary btn-lg"
+                        data-mdb-button-initialized="true">Войти</button>
             </div>
         </form>
         <div th:if="${param.error}">
@@ -61,7 +69,41 @@
     <footer class="py-3 my-4" style="position: absolute; bottom: 0; width: 100%;">
         <p class="text-center text-body-secondary">© 2024 Автомобильные заметки</p>
     </footer>
+<script>
+    (function () {
+        'use strict'
+        var forms = document.querySelectorAll('.needs-validation')
+        Array.prototype.slice.call(forms)
+            .forEach(function (form) {
+                form.addEventListener('submit', function (event) {
+                    var username = form.querySelector('#username');
+                    var password = form.querySelector('#password');
 
+                    if (!username.value.match(/^[A-Za-z0-9]+$/)) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                        username.setCustomValidity('Логин должен содержать только латинские буквы и цифры.');
+                    } else {
+                        username.setCustomValidity('');
+                    }
+
+                    if (!password.value.match(/^[A-Za-z0-9]+$/)) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                        password.setCustomValidity('Пароль должен содержать только латинские буквы и цифры.');
+                    } else {
+                        password.setCustomValidity('');
+                    }
+
+                    if (!form.checkValidity()) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                    }
+                    form.classList.add('was-validated');
+                }, false);
+            })
+    })()
+</script>
 </body>
 </html>
 

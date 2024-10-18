@@ -5,7 +5,6 @@ import org.project.models.User;
 import org.project.repo.NoteRepository;
 import org.project.repo.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,8 +14,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
-
-
 
 @Controller
 public class NoteController {
@@ -67,13 +64,25 @@ public class NoteController {
     }
 
     @GetMapping("/viewNote")
-    public String viewNotes(Model model) {
+    public String viewNote(Model model) {
         String currentUsername = SecurityContextHolder.getContext().getAuthentication().getName();
         User currentUser = userRepository.findByUsername(currentUsername);
+
+        // Проверка, забанен ли пользователь
+        if (!currentUser.isEnabled()) {
+            return "redirect:/viewNoteError";
+        }
+
         Iterable<Note> note = noteRepository.findByUser(currentUser);
         model.addAttribute("note", note);
         model.addAttribute("username", currentUsername);
         return "viewNote";
+
+    }
+
+    @GetMapping("/viewNoteError")
+    public String viewNoteError(Model model) {
+        return "viewNoteError";
     }
 
     @GetMapping("/editNote/{id}")

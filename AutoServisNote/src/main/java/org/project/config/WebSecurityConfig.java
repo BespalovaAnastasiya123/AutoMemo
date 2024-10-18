@@ -30,8 +30,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers("/viewAllUsers").hasRole("ADMIN")
-                .antMatchers("/", "/register", "/h2-console/**").permitAll()
+                .antMatchers("/admin").hasRole("ADMIN")
+                .antMatchers("/", "/register", "/registerSuccess", "/h2-console/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
@@ -40,7 +40,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                     @Override
                     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
                         if (authentication.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_ADMIN"))) {
-                            response.sendRedirect("/viewAllUsers");
+                            response.sendRedirect("/admin");
                         } else {
                             response.sendRedirect("/addNote");
                         }
