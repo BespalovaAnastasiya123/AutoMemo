@@ -34,7 +34,7 @@ public class MainController {
         }
         // Добавление имени пользователя в модель
         model.addAttribute("username", currentUsername);
-        model.addAttribute("addNote", "Заметки");
+        model.addAttribute("addNote", "Добавление заметки");
         return "addNote";
     }
 

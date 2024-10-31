@@ -13,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class AdminController {
@@ -75,5 +76,19 @@ public class AdminController {
 
     public long getNoteCountByUser(User user) {
         return noteRepository.countByUser(user);
+    }
+
+    @GetMapping("/forgotPassword")
+    public String forgotPasswordForm() {
+        return "forgotPassword";
+    }
+
+    @PostMapping("/forgotPassword")
+    public String forgotPassword(@RequestParam("username") String username, @RequestParam("email") String email, Model model) {
+        Notification notification = new Notification();
+        notification.setMessage("Запрос на восстановление пароля от пользователя: " + username + " (Email: " + email + ")");
+        notificationRepository.save(notification);
+        model.addAttribute("message", "Запрос на восстановление пароля отправлен администратору.");
+        return "forgotPassword";
     }
 }

@@ -35,7 +35,10 @@ public class RegisterController {
             model.addAttribute("error", "Пользователь с таким именем уже существует");
             return "register";
         }
-
+        if ("admin".equalsIgnoreCase(user.getUsername())) {
+            model.addAttribute("error", "Вы не можете зарегистрироваться под именем admin");
+            return "register";
+        }
         userRepository.save(user);
         return "redirect:/registerSuccess";
     }
